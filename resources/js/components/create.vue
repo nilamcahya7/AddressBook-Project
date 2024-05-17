@@ -10,28 +10,22 @@
                 <label>Name</label>
                 <input type="text" class="form-control" v-model="contacts.name" placeholder="Enter Name">
                 <div v-if="validation.name">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.name[0] }}
-                                    </div>
-                                </div>
+                  <div class="alert alert-danger mt-1" role="alert">{{ validation.name[0] }}</div>
+                </div>
               </div>
               <div class="form-group">
                 <label>Address</label>
                 <input type="text" class="form-control" v-model="contacts.address" placeholder="Enter Address">
                 <div v-if="validation.address">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.address[0] }}
-                                    </div>
-                                </div>
+                  <div class="alert alert-danger mt-1" role="alert">{{ validation.address[0] }}</div>
+                </div>
               </div>
               <div class="form-group">
                 <label>Phone Number</label>
                 <input type="text" class="form-control" v-model="contacts.phone" placeholder="Enter Phone Number">
                 <div v-if="validation.phone">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.phone[0] }}
-                                    </div>
-                                </div>
+                  <div class="alert alert-danger mt-1" role="alert">{{ validation.phone[0] }}</div>
+                </div>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
@@ -66,7 +60,7 @@ export default {
           if (response.data.success) {
             alert('Contact added successfully');
             this.resetForm();
-            this.$router.go(-1); // Go back to the previous page
+            this.$router.go(-1);
           } else {
             alert('Failed to add contact');
           }

@@ -77,7 +77,7 @@ export default {
         .then(response => {
           if (response.data.success) {
             alert('Contact updated successfully');
-            this.$router.go(-1); // Go back to the previous page
+            this.$router.go(-1);
           } else {
             alert('Failed to update contact');
           }

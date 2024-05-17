@@ -25,7 +25,7 @@
                     <td>{{ i.phone }}</td>
                     <td class="text-center">
                       <router-link :to="{name : 'edit', params: { id: i.id }}" class="btn btn-primary">EDIT</router-link>
-                      <button class="btn-danger btn-sm">DELETE</button>
+                      <button class="btn-danger btn-sm" @click="deleteContact(i.id)">DELETE</button>
                     </td>
                   </tr>
                 </tbody>
@@ -63,6 +63,22 @@ export default{
         .catch(error => {
           console.error('Error:', error);
         });
+    },
+    deleteContact(id) {
+      if (confirm('Are you sure you want to delete this contact?')) {
+        axios.delete(`/contacts/delete/${id}`)
+          .then(response => {
+            if (response.data.success) {
+              alert('Contact deleted successfully');
+              this.fetchContacts();
+            } else {
+              alert('Failed to delete contact');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
     }
   }
 };

@@ -7,6 +7,12 @@
           <div class="card-header"> ADDRESS BOOK </div>
           <div class="card-body">
             <router-link to="/create" class="btn btn-info">ADD CONTACT</router-link>
+            <div class="input-group mb-3">
+              <input type="text" v-model="searchQuery" class="form-control" placeholder="Search contacts...">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" @click="searchContacts">Search</button>
+              </div>
+            </div>
             <div class="table-responsive mt-3">
               <table class="table table-hover table-bordered" border="1">
                 <thead>
@@ -44,6 +50,7 @@ import axios from 'axios'
 export default{
   data(){
     return{
+      searchQuery:'',
       contacts:[]
     }
   },
@@ -79,7 +86,20 @@ export default{
             console.error('Error:', error);
           });
       }
-    }
+    },
+    searchContacts() {
+      axios.get(`/search?query=${this.searchQuery}`)
+        .then(response => {
+          if (response.data.success) {
+            this.contacts = response.data.data;
+          } else {
+            console.error('Failed to fetch search results');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
   }
 };
 </script>

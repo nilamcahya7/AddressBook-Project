@@ -12,3 +12,4 @@ Route::get('/contacts/{id?}', [AddressController::class, 'show']);
 Route::post('/contacts/store', [AddressController::class, 'store']);
 Route::put('/contacts/update/{id?}', [AddressController::class, 'update']);
 Route::delete('/contacts/delete/{id?}', [AddressController::class, 'destroy']);
+Route::get('/search', [AddressController::class, 'search']);

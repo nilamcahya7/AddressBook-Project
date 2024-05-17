@@ -128,5 +128,19 @@ class AddressController extends Controller
             ], 500);
         }
     }
+    public function search(Request $request){
+        $query = $request->input('query');
+        $contacts = Contact::where('name', 'LIKE', "%{$query}%")
+                            ->orWhere('address', 'LIKE', "%{$query}%")
+                            ->orWhere('phone', 'LIKE', "{%$query%}")
+                            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Search Results',
+            'data' => $contacts
+        ], 200);
+    }
 }
+
 

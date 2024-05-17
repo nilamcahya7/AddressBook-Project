@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class AddressController extends Controller
 {
     public function index(){
-        $contacts = Contact::latest()->get();
+        $contacts = Contact::all();
         return response([
             'success' => true,
             'message' => 'List Contact',

@@ -24,7 +24,7 @@
                     <td>{{ i.address }}</td>
                     <td>{{ i.phone }}</td>
                     <td class="text-center">
-                      <router-link class="btn btn-primary">EDIT</router-link>
+                      <router-link :to="{name : 'edit', params: { id: i.id }}" class="btn btn-primary">EDIT</router-link>
                       <button class="btn-danger btn-sm">DELETE</button>
                     </td>
                   </tr>

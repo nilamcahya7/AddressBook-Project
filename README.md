@@ -1,66 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Address Book Project
 
-## About Laravel
+A web address book is a web page that functions to manage contacts, such as adding new contacts, editing contact data, deleting contact data, and being able to view all contact data you have. Not only that, this website has other features such as being able to filter and group based on certain criteria. This makes it easier to manage contacts.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Environment Variables
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+To run this project, you will need to add the following environment variables to your .env file
 
-## Learning Laravel
+`DB_CONNECTION`
+`DB_HOST`
+`DB_PORT`
+`DB_DATABASE`
+`DB_USERNAME`
+`DB_PASSWORD`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Running App
 
-## Laravel Sponsors
+To run tests, run the following command
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+npm run dev -> for client-side
+```
 
-### Premium Partners
+```bash
+php artisan serve -> for server-side
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## Screenshots
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![App Screenshot](https://lh3.googleusercontent.com/pw/AP1GczOui0KcTfvkerK4vxdXW1Q5RTaKdZAIvpgidBfj91myleXftDeW_u9Z9rgikPWIynLlcM8PLHREHppN_MMBc1kd6DrbdUDviaDX6eviqokF9zrAG6f0-FlFUwTsLzx76WsPvd4nSS-gVKXUWLnD9h-NRqRDxFQFjAyLrtnIRrUqWYkJKb1be5vSWNPY-Q8a1Pnt9WMD3RiZkdOZZHyC4zWq_GSYrJPCWKK1QnTEbfzCvN1jAsBqpKDW-D8HeydCHbOiugcdskV63_acGW_N1rvJJS8zYwU8CzveLfpYa0IQsjbEwnvo4dGdNQ-w-OlPH0yqly7c_ASmfDA8qwtTtkGmHpBAm6B9q1zSHo0gLWRCHkt86a2Gc1JM-fh94zLlkWbG-PHugbUQy2jNsTM4lTw4mUl8eq7pqP04s_4Nl9_IyBbcYKwPdq2stsdeaP5P138QV4coGLwsj3elM96sya4X8FIZDP2iEoEH4EwM4FYppm1IhZ9Fp2IOSXyBlPuDZ_qfiXcfWIoz9fIrOrl4LvV_aM9YHiC0-g2IlExo0H03wY_2EJ_qT86yso_72n7JimpidROGCLXE7IpZzcaIcHpaUuRwDJy7CfjcEuXMcUY7DThtc8S9gxBceFWUXDktLnPbbEa0ilW3R73fNUQerLbtqN2bayW5E7gN7rWarVRd2rIBltuTDnG45d5OqiJ1_NHmfgBEphB4CS8oUrDHCybrIu9OIpEPdEdG0QVJcYMNZXhxs15-v1t2ncddbdX_qGlMxAk4Qnp7y-f46L32Q-t_041djSEc3P_cvMo5K8xnb9EuVX0xRdxftwPEQ17OaRGXbMgVloLtqhnueg50D1V1JfObXCvgg_f4SWsCvaeO8I1_oSiBMtncvjxeZ33tTJp1d8lrlDTZVEqx8vVfVmY=w1869-h947-s-no-gm?authuser=0)
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Features
 
-## License
+- Show all contact
+- Created new contact
+- Update contact
+- Delete contact
+- Search
+- Filtering
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## API Reference
+
+#### Get all contact
+
+```http
+  GET /contacts
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
+
+#### Get item
+
+```http
+  GET /contacts/{id?}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+#### Add contact
+
+```http
+  POST /contacts/store
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. name to fill in the database  |
+| `address`      | `string` | **Required**.  address to fill in the database
+| `phone`      | `string` | **Required**. phone to fill in the database |
+| `Relationship`      | `string` | **Default**. automatically defaults to the Friends option |
+| `Gender`      | `string` | **Default**. automatically defaults to the Male option |
+| `Status`      | `string` | **Default**. automatically defaults to the Active option |
+
+
+#### Update contact
+
+```http
+  PUT /contacts/update/{id?}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | Required. Id of item to fetch  |
+| `name`      | `string` | **Required**. name to fill in the database  |
+| `address`      | `string` | **Required**.  address to fill in the database
+| `phone`      | `string` | **Required**. phone to fill in the database |
+| `Relationship`      | `string` | **Default**. automatically defaults to the Friends option |
+| `Gender`      | `string` | **Default**. automatically defaults to the Male option |
+| `Status`      | `string` | **Default**. automatically defaults to the Active option |
+
+#### Delete contact
+
+```http
+  DELETE /contacts/delete/{id?}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+#### Search contact
+
+```http
+  GET /search
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | query for search |
+| `address`      | `string` | query for search |
+| `phone`      | `string` | query for search |
+
+#### Filter contact
+
+```http
+  GET /filter
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Relationship`      | `string` | Criteria for filter |
+| `Gender`      | `string` | Criteria for filter |
+| `Status`      | `string` | Criteria for filter |
+
+
+
+# Hi, I'm Nilam! 👋
+
+
+## Authors
+
+- [@Nilam Cahya](https://www.instagram.com/nilamccc/)
+
+
+## 🔗 Links
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nilamcahyaa/)
+
+
+
+## Tech Stack
+
+**Client:** Vue.Js
+
+**Server:** Laravel
+
+**Single Page Aplication**
+

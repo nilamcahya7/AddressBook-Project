@@ -1,10 +1,10 @@
 <template>
   <div class="container mt-3">
     <router-view></router-view>
-    <div class= "row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card card-default">
-          <div class="card-header"> ADDRESS BOOK </div>
+          <div class="card-header">ADDRESS BOOK</div>
           <div class="card-body">
             <router-link to="/create" class="btn btn-info">ADD CONTACT</router-link>
             <div class="input-group mb-3">
@@ -47,11 +47,12 @@
                     <th>Relationship</th>
                     <th>Gender</th>
                     <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(contact, index) in contacts" :key="contact.id">
-                    <td>{{ index + 1 }}</td>
+                    <td>{{ index + 1 + (currentPage - 1) * perPage }}</td>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.address }}</td>
                     <td>{{ contact.phone }}</td>
@@ -65,6 +66,25 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="pagination">
+              <button class="btn btn-primary" :disabled="currentPage === 1" @click="fetchContacts(currentPage - 1)">Previous</button>
+              <button
+                v-for="page in pageButtons"
+                :key="page"
+                class="btn btn-primary"
+                @click="fetchContacts(page)"
+                :disabled="currentPage === page"
+              >
+                {{ page }}
+              </button>
+              <button
+                v-if="totalPages > maxVisibleButtons"
+                class="btn btn-primary"
+                @click="nextPageGroup"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
@@ -83,18 +103,35 @@ export default {
       selectedRelationship: '',
       selectedGender: '',
       selectedStatus: '',
-      contacts: []
+      contacts: [],
+      currentPage: 1,
+      totalPages: 1,
+      perPage: 10,
+      maxVisibleButtons: 10,
+      startPage: 1,
     }
   },
   mounted() {
     this.fetchContacts();
   },
+  computed: {
+    pageButtons() {
+      const endPage = Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
+      let buttons = [];
+      for (let i = this.startPage; i <= endPage; i++) {
+        buttons.push(i);
+      }
+      return buttons;
+    }
+  },
   methods: {
-    fetchContacts() {
-      axios.get('/contacts')
+    fetchContacts(page = 1) {
+      this.currentPage = page;
+      axios.get('/contacts', { params: { page: this.currentPage, perPage: this.perPage } })
         .then(response => {
           if (response.data.success) {
             this.contacts = response.data.data;
+            this.totalPages = response.data.last_page;
           } else {
             console.error('Failed to fetch contacts');
           }
@@ -109,7 +146,7 @@ export default {
           .then(response => {
             if (response.data.success) {
               alert('Contact deleted successfully');
-              this.fetchContacts();
+              this.fetchContacts(this.currentPage);
             } else {
               alert('Failed to delete contact');
             }
@@ -120,10 +157,11 @@ export default {
       }
     },
     searchContacts() {
-      axios.get(`/search?query=${this.searchQuery}`)
+      axios.get(`/search`, { params: { query: this.searchQuery, page: this.currentPage, perPage: this.perPage } })
         .then(response => {
           if (response.data.success) {
             this.contacts = response.data.data;
+            this.totalPages = response.data.last_page;
           } else {
             console.error('Failed to fetch search results');
           }
@@ -133,7 +171,10 @@ export default {
         });
     },
     filterContacts() {
-      const params = {};
+      const params = {
+        page: this.currentPage,
+        perPage: this.perPage
+      };
       if (this.selectedRelationship) {
         params.relationship = this.selectedRelationship;
       }
@@ -144,14 +185,11 @@ export default {
         params.status = this.selectedStatus;
       }
 
-      if (Object.keys(params).length === 0) {
-        this.fetchContacts();
-        return;
-      }
       axios.get(`/filter`, { params })
         .then(response => {
           if (response.data.success) {
             this.contacts = response.data.data;
+            this.totalPages = response.data.last_page;
           } else {
             console.error('Failed to fetch filtered contacts');
           }
@@ -159,7 +197,25 @@ export default {
         .catch(error => {
           console.error('Error:', error);
         });
-        }
+    },
+    nextPageGroup() {
+      if (this.startPage + this.maxVisibleButtons <= this.totalPages) {
+        this.startPage += this.maxVisibleButtons;
+        this.fetchContacts(this.startPage);
+      }
     }
-  };
+  }
+};
 </script>
+
+<style>
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+}
+</style>

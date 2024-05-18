@@ -19,8 +19,6 @@ return new class extends Migration
             $table->enum('relationship', ['Family', 'Friend', 'Colleague', 'Other']);
             $table->enum('gender', ['Male', 'Female', 'Other']);
             $table->enum('status', ['Active', 'Inactive']);
-
-
             $table->timestamps();
         });
     }

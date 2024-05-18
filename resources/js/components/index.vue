@@ -13,8 +13,31 @@
                 <button class="btn btn-primary" type="button" @click="searchContacts">Search</button>
               </div>
             </div>
+            <div class="input-group mb-3">
+              <select v-model="selectedRelationship" class="form-control">
+                <option value="">All Relationships</option>
+                <option value="Family">Family</option>
+                <option value="Friend">Friend</option>
+                <option value="Colleague">Colleague</option>
+                <option value="Other">Other</option>
+              </select>
+              <select v-model="selectedGender" class="form-control">
+                <option value="">All Genders</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              <select v-model="selectedStatus" class="form-control">
+                <option value="">All Statuses</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" @click="filterContacts">Filter</button>
+              </div>
+            </div>
             <div class="table-responsive mt-3">
-              <table class="table table-hover table-bordered" border="1">
+              <table class="table table-hover table-bordered">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -27,17 +50,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(i, index) in contacts" :key="index">
-                    <td>{{ i.id }}</td>
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.address }}</td>
-                    <td>{{ i.phone }}</td>
-                    <td>{{ i.relationship }}</td>
-                    <td>{{ i.gender }}</td>
-                    <td>{{ i.status }}</td>
+                  <tr v-for="(contact, index) in contacts" :key="contact.id">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.address }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.relationship }}</td>
+                    <td>{{ contact.gender }}</td>
+                    <td>{{ contact.status }}</td>
                     <td class="text-center">
-                      <router-link :to="{name : 'edit', params: { id: i.id }}" class="btn btn-primary">EDIT</router-link>
-                      <button class="btn-danger btn-sm" @click="deleteContact(i.id)">DELETE</button>
+                      <router-link :to="{ name: 'edit', params: { id: contact.id }}" class="btn btn-primary">EDIT</router-link>
+                      <button class="btn-danger btn-sm" @click="deleteContact(contact.id)">DELETE</button>
                     </td>
                   </tr>
                 </tbody>
@@ -53,20 +76,23 @@
 <script>
 import axios from 'axios'
 
-export default{
-  data(){
-    return{
-      searchQuery:'',
-      contacts:[]
+export default {
+  data() {
+    return {
+      searchQuery: '',
+      selectedRelationship: '',
+      selectedGender: '',
+      selectedStatus: '',
+      contacts: []
     }
   },
-  mounted(){
+  mounted() {
     this.fetchContacts();
   },
-  methods:{
-    fetchContacts(){
+  methods: {
+    fetchContacts() {
       axios.get('/contacts')
-        .then(response=>{
+        .then(response => {
           if (response.data.success) {
             this.contacts = response.data.data;
           } else {
@@ -106,6 +132,34 @@ export default{
           console.error('Error:', error);
         });
     },
-  }
-};
+    filterContacts() {
+      const params = {};
+      if (this.selectedRelationship) {
+        params.relationship = this.selectedRelationship;
+      }
+      if (this.selectedGender) {
+        params.gender = this.selectedGender;
+      }
+      if (this.selectedStatus) {
+        params.status = this.selectedStatus;
+      }
+
+      if (Object.keys(params).length === 0) {
+        this.fetchContacts();
+        return;
+      }
+      axios.get(`/filter`, { params })
+        .then(response => {
+          if (response.data.success) {
+            this.contacts = response.data.data;
+          } else {
+            console.error('Failed to fetch filtered contacts');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+        }
+    }
+  };
 </script>

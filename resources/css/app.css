@@ -1,0 +1,43 @@
+* {
+  background-color: #FFF2E1;
+}
+.card-header {
+  background-color: #994D1C;
+  
+}
+.card{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card-body{
+  background-color: whitesmoke;
+}
+.form-group{
+  background-color: whitesmoke;
+}
+.form-label{
+  background-color: whitesmoke;
+}
+.custom-row{
+  background-color: whitesmoke;
+}
+.custom-th{
+  background-color: #C08261;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: whitesmoke;
+}
+
+.pagination button {
+  margin: 0 2px;
+}
+
+.update {
+  margin-left: 20px;
+}
+
+.save{
+  margin-left: 20px;
+}

@@ -10,8 +10,8 @@ class AddressController extends Controller
 {
     public function index(Request $request) {
         $perPage = 10;
-        $contacts = Contact::paginate($perPage);
-
+        $contacts = Contact::latest()->paginate($perPage);
+    
         return response()->json([
             'success' => true,
             'message' => 'List Contact',
@@ -19,9 +19,8 @@ class AddressController extends Controller
             'current_page' => $contacts->currentPage(),
             'last_page' => $contacts->lastPage(),
             'total' => $contacts->total()
-        ], 200);
+        ], 200);    
     }
-
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -34,9 +33,6 @@ class AddressController extends Controller
             'name.required' => 'please enter name!',
             'address.required' => 'please enter address!',
             'phone.required' => 'please enter phone number!',
-            'relationship.required' => 'Please select relationship!',
-            'gender.required' => 'Please select gender!',
-            'status.required' => 'Please select status!',
         ]);
 
         if ($validator->fails()) {
@@ -158,7 +154,7 @@ class AddressController extends Controller
                             ->orWhere('address', 'LIKE', "%{$query}%")
                             ->orWhere('phone', 'LIKE', "%{$query}%")
                             ->paginate($perPage);
-
+                            
         return response()->json([
             'success' => true,
             'message' => 'data found in the database',

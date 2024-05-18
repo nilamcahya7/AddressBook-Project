@@ -4,16 +4,17 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card card-default">
-          <div class="card-header">ADDRESS BOOK</div>
+          <div class="card-header">
+            <h4 class="card-header">ADDRESS BOOK</h4></div>
           <div class="card-body">
-            <router-link to="/create" class="btn btn-info">ADD CONTACT</router-link>
-            <div class="input-group mb-3">
-              <input type="text" v-model="searchQuery" class="form-control" placeholder="Search contacts...">
+            <router-link to="/create" class="btn btn-outline-success btn-sm">ADD CONTACT</router-link>
+            <div class="input-group mb-3 mt-3">
+              <input type="text" v-model="searchQuery" class="form-control" placeholder="Search Contact">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button" @click="searchContacts">Search</button>
               </div>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <select v-model="selectedRelationship" class="form-control">
                 <option value="">All Relationships</option>
                 <option value="Family">Family</option>
@@ -36,10 +37,10 @@
                 <button class="btn btn-primary" type="button" @click="filterContacts">Filter</button>
               </div>
             </div>
-            <div class="table-responsive mt-3">
-              <table class="table table-hover table-bordered">
+            <div class="content table-responsive mt-3">
+              <table class="table table-hover table-bordered custom-row">
                 <thead>
-                  <tr>
+                  <tr class="custom-th">
                     <th>No</th>
                     <th>Name</th>
                     <th>Address</th>
@@ -51,7 +52,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(contact, index) in contacts" :key="contact.id">
+                  <tr v-for="(contact, index) in contacts" :key="contact.id" class="custom-row">
                     <td>{{ index + 1 + (currentPage - 1) * perPage }}</td>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.address }}</td>
@@ -60,27 +61,27 @@
                     <td>{{ contact.gender }}</td>
                     <td>{{ contact.status }}</td>
                     <td class="text-center">
-                      <router-link :to="{ name: 'edit', params: { id: contact.id }}" class="btn btn-primary">EDIT</router-link>
-                      <button class="btn-danger btn-sm" @click="deleteContact(contact.id)">DELETE</button>
+                      <router-link :to="{ name: 'edit', params: { id: contact.id }}" class="btn btn-sm"><i class="fas fa-edit"></i></router-link>
+                      <button class="btn btn-sm" @click="deleteContact(contact.id)"><i class="fas fa-trash"></i></button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="pagination">
-              <button class="btn btn-primary" :disabled="currentPage === 1" @click="fetchContacts(currentPage - 1)">Previous</button>
+              <button class="btn btn-outline-primary btn-sm" :disabled="currentPage === 1" @click="handlePagination(currentPage - 1)">Previous</button>
               <button
                 v-for="page in pageButtons"
                 :key="page"
-                class="btn btn-primary"
-                @click="fetchContacts(page)"
+                class="btn btn-outline-primary btn-sm"
+                @click="handlePagination(page)"
                 :disabled="currentPage === page"
               >
                 {{ page }}
               </button>
               <button
                 v-if="totalPages > maxVisibleButtons"
-                class="btn btn-primary"
+                class="btn btn-outline-primary btn-sm"
                 @click="nextPageGroup"
               >
                 Next
@@ -109,6 +110,8 @@ export default {
       perPage: 10,
       maxVisibleButtons: 10,
       startPage: 1,
+      isSearching: false,
+      isFiltering: false,
     }
   },
   mounted() {
@@ -146,7 +149,7 @@ export default {
           .then(response => {
             if (response.data.success) {
               alert('Contact deleted successfully');
-              this.fetchContacts(this.currentPage);
+              this.handlePagination(this.currentPage);
             } else {
               alert('Failed to delete contact');
             }
@@ -156,7 +159,10 @@ export default {
           });
       }
     },
-    searchContacts() {
+    searchContacts(page = 1) {
+      this.currentPage = page;
+      this.isSearching = true;
+      this.isFiltering = false;
       axios.get(`/search`, { params: { query: this.searchQuery, page: this.currentPage, perPage: this.perPage } })
         .then(response => {
           if (response.data.success) {
@@ -170,7 +176,10 @@ export default {
           console.error('Error:', error);
         });
     },
-    filterContacts() {
+    filterContacts(page = 1) {
+      this.currentPage = page;
+      this.isSearching = false;
+      this.isFiltering = true;
       const params = {
         page: this.currentPage,
         perPage: this.perPage
@@ -198,24 +207,21 @@ export default {
           console.error('Error:', error);
         });
     },
+    handlePagination(page) {
+      if (this.isSearching) {
+        this.searchContacts(page);
+      } else if (this.isFiltering) {
+        this.filterContacts(page);
+      } else {
+        this.fetchContacts(page);
+      }
+    },
     nextPageGroup() {
       if (this.startPage + this.maxVisibleButtons <= this.totalPages) {
         this.startPage += this.maxVisibleButtons;
-        this.fetchContacts(this.startPage);
+        this.handlePagination(this.startPage);
       }
     }
   }
 };
 </script>
-
-<style>
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.pagination button {
-  margin: 0 5px;
-}
-</style>

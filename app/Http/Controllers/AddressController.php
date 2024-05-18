@@ -157,7 +157,40 @@ class AddressController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Search Results',
+            'message' => 'data found in the database',
+            'data' => $contacts
+        ], 200);
+    }
+    public function filter(Request $request){
+        $validator = Validator::make($request->all(), [
+            'relationship' => 'in:Family,Friend,Colleague,Other',
+            'gender' => 'in:Male,Female,Other',
+            'status' => 'in:Active,Inactive',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'data' => $validator->errors()
+            ], 400);
+        }
+    
+        $query = Contact::query();
+        if ($request->has('relationship')) {
+            $query->where('relationship', $request->relationship);
+        }
+        if ($request->has('gender')) {
+            $query->where('gender', $request->gender);
+        }
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $contacts = $query->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data based on filters found',
             'data' => $contacts
         ], 200);
     }

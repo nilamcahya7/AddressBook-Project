@@ -21,11 +21,17 @@ class AddressController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'relationship' => 'required|in:Family,Friend,Colleague,Other',
+            'gender' => 'required|in:Male,Female,Other',
+            'status' => 'required|in:Active,Inactive',
         ],[
             'name.required' => 'please enter name!',
             'address.required' => 'please enter address!',
-            'phone.required' => 'please enter phone number!'
+            'phone.required' => 'please enter phone number!',
+            'relationship.required' => 'Please select relationship!',
+            'gender.required' => 'Please select gender!',
+            'status.required' => 'Please select status!',
         ]);
 
         if($validator->fails()) {
@@ -40,7 +46,10 @@ class AddressController extends Controller
                 $contacts = Contact::create([
                     'name' => $request->input('name'),
                     'address' => $request->input('address'),
-                    'phone' => $request->input('phone')
+                    'phone' => $request->input('phone'),
+                    'relationship' => $request->input('relationship'),
+                    'gender' => $request->input('gender'),
+                    'status' => $request->input('status')
                 ]);
                 
                 if ($contacts) {
@@ -78,11 +87,19 @@ class AddressController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'status' => 'required',
+            'relationship' => 'required|in:Family,Friend,Colleague,Other',
+            'gender' => 'required|in:Male,Female,Other',
+            'status' => 'required|in:Active,Inactive',
         ],[
             'name.required' => 'please enter name!',
             'address.required' => 'please enter address!',
-            'phone.requires' => 'please enter phone number!'
+            'phone.required' => 'please enter phone number!',
+            'status.required' => 'please enter status',
+            'relationship.required' => 'Please select relationship!',
+            'gender.required' => 'Please select gender!',
+            'status.required' => 'Please select status!',
         ]);
 
         if($validator->fails()){
@@ -96,7 +113,10 @@ class AddressController extends Controller
             $contacts =Contact::where('id', $id)->update([
                 'name' => $request->input('name'),
                 'address' => $request->input('address'),
-                'phone' => $request->input('phone')
+                'phone' => $request->input('phone'),
+                'relationship' => $request->input('relationship'),
+                'gender' => $request->input('gender'),
+                'status' => $request->input('status')
             ]);
 
             if($contacts) {

@@ -20,7 +20,10 @@
                     <th>No</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Phone</th>
+                    <th>Phone Number</th>
+                    <th>Relationship</th>
+                    <th>Gender</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -29,6 +32,9 @@
                     <td>{{ i.name }}</td>
                     <td>{{ i.address }}</td>
                     <td>{{ i.phone }}</td>
+                    <td>{{ i.relationship }}</td>
+                    <td>{{ i.gender }}</td>
+                    <td>{{ i.status }}</td>
                     <td class="text-center">
                       <router-link :to="{name : 'edit', params: { id: i.id }}" class="btn btn-primary">EDIT</router-link>
                       <button class="btn-danger btn-sm" @click="deleteContact(i.id)">DELETE</button>

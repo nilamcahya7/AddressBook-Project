@@ -34,7 +34,31 @@
                 </div>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
+                <label>Gender</label>
+                <select class="form-control" v-model="contacts.gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Relationship</label>
+                <select class="form-control" v-model="contacts.relationship">
+                  <option value="Family">Family</option>
+                  <option value="Friend">Friend</option>
+                  <option value="Colleague">Colleague</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" v-model="contacts.status">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-md btn-success">UPDATE</button>
                 <button type="reset" class="btn btn-md btn-danger">RESET</button>
               </div>
             </form>
@@ -52,7 +76,7 @@ export default {
   data() {
     return {
       contacts: {},
-      validation: []
+      validation: {}
     }
   },
   created() {
@@ -90,7 +114,10 @@ export default {
       this.contacts = {
         name: '',
         address: '',
-        phone: ''
+        phone: '',
+        gender: '',
+        relationship: '',
+        status: ''
       };
       this.validation = {};
     }

@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
+            $table->enum('relationship', ['Family', 'Friend', 'Colleague', 'Other']);
+            $table->enum('gender', ['Male', 'Female', 'Other']);
+            $table->enum('status', ['Active', 'Inactive']);
+
+
             $table->timestamps();
         });
     }
